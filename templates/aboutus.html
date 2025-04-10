@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Ransomware Detection System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 70px;
+    }
+
+    .navbar {
+      background-color: #1f1f1f !important;
+    }
+
+    .hero-section {
+      background-color: #2c3e50;
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .hero-section h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    .hero-section p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 60px 0 30px;
+      font-weight: 600;
+      font-size: 2rem;
+    }
+
+    .feature-card {
+      border-radius: 12px;
+      padding: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .img-custom {
+      max-width: 700px;
+      width: 100%;
+      height: auto;
+      display: inline-block;
+    }
+
+    footer {
+      background-color: #1f1f1f;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: #3498db;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Ransomware Detection</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{{ url_for('about') }}">About Us</a></li>
+          {% if 'username' in session %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('detect') }}">Detection Interface</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('detectload') }}">Detection</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}" onclick="clearFileName()">Logout</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}" onclick="clearFileName()">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1>About Our Ransomware Detection System</h1>
+    <p>Understand the mission, methodology, and models behind our threat classification engine.</p>
+  </div>
+
+  <!-- About Section -->
+  <div class="container mt-5 mb-5">
+    <h2 class="section-title">About Our System</h2>
+    <p class="text-center text-muted px-3">
+      Our project, <strong>“A System for Analyzing and Categorizing Ransomware Threats using Machine Learning Techniques,”</strong>
+      aims to detect and classify ransomware variants to reduce financial and operational losses. It identifies threats like
+      LockBit, BlackCat (ALPHV), Rhysida, Akira, and Play Ransomware by analyzing indicators such as domain entropy,
+      network behavior, and encryption patterns.
+    </p>
+
+    <div class="row text-center g-4 mt-4">
+      <div class="col-md-4">
+        <div class="card feature-card shadow-sm">
+          <h5 class="text-primary">🎯 Goal</h5>
+          <p>To provide accurate and real-time classification of ransomware threats using intelligent ML models.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card feature-card shadow-sm">
+          <h5 class="text-success">🧪 Approach</h5>
+          <p>We use Random Forest, Support Vector Machine (SVM), and Logistic Regression models, with ANOVA F-statistic for feature selection.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card feature-card shadow-sm">
+          <h5 class="text-warning">📊 Evaluation</h5>
+          <p>Models are evaluated based on accuracy, precision, recall, and F1-score for effective multi-class classification.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <h4 class="text-center text-dark fw-semibold mb-4">🔍 Features We Analyze</h4>
+      <div class="row g-3 text-muted text-center">
+        <div class="col-md-4">✔️ Domain Entropy</div>
+        <div class="col-md-4">✔️ Vowel Ratio</div>
+        <div class="col-md-4">✔️ Domain Length</div>
+        <div class="col-md-4">✔️ Outbound Connections</div>
+        <div class="col-md-4">✔️ DNS Query Rate</div>
+        <div class="col-md-4">✔️ Exfiltration Indicator</div>
+        <div class="col-md-4">✔️ Distinct IPs</div>
+        <div class="col-md-4">✔️ Packet Size</div>
+        <div class="col-md-4">✔️ Communication Time</div>
+        <div class="col-md-4">✔️ Protocol Type</div>
+        <div class="col-md-4">✔️ Non-Standard Ports</div>
+        <div class="col-md-4">✔️ TLS Validity</div>
+        <div class="col-md-4">✔️ User Agent</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model Analysis Section -->
+  <div class="container mt-5 mb-5">
+    <h2 class="section-title">📊 Ransomware Detection Model Analysis</h2>
+
+    <!-- Feature Importance -->
+    <div class="mb-5">
+      <h4 class="text-dark">🔥 Feature Importance - Random Forest</h4>
+      <p>This chart shows which features most influence the detection of ransomware using the Random Forest model.</p>
+      <div class="text-center">
+        <img src="{{ url_for('static', filename='feature.png') }}" alt="Feature Importance" style="max-height: 300px; width: auto;" class="img-custom rounded border shadow-sm">
+      </div>
+    </div>
+
+    <!-- Confusion Matrix -->
+    <div class="mb-5">
+      <h4 class="text-dark">📌 Confusion Matrix - Random Forest</h4>
+      <p>This matrix visualizes the classification performance by comparing actual labels with predicted ones.</p>
+      <div class="text-center">
+        <img src="{{ url_for('static', filename='confusion.png') }}" alt="Confusion Matrix" style="max-height: 300px; width: auto;" class="img-custom rounded border shadow-sm">
+      </div>
+    </div>
+
+    <!-- ROC Curve -->
+    <div class="mb-5">
+      <h4 class="text-dark">📈 ROC Curve - Random Forest</h4>
+      <p>The ROC curve illustrates how well the Random Forest model distinguishes between classes across thresholds.</p>
+      <div class="text-center">
+        <img src="{{ url_for('static', filename='roc.png') }}" alt="ROC Curve" style="max-height: 300px; width: auto;" class="img-custom rounded border shadow-sm">
+      </div>
+    </div>
+
+    <!-- Model Comparison -->
+    <div class="mb-5">
+      <h4 class="text-dark">📊 Model Comparison (Accuracy, Precision, Recall, F1)</h4>
+      <p>This bar graph compares the performance metrics of Random Forest, SVM, and Logistic Regression models.</p>
+      <div class="text-center">
+        <img src="{{ url_for('static', filename='comparison.jpg') }}" alt="Model Comparison" style="max-height: 300px; width: auto;" class="img-custom rounded border shadow-sm">
+      </div>
+    </div>
+  </div>
+
+  <!-- Meet the Team Section -->
+  <div class="container mt-5 mb-5">
+    <h2 class="section-title">Meet the Team</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
+      <div class="col">
+        <div class="card feature-card text-center shadow-sm">
+          <h5 class="mb-1">Dhana Lakshmi Anke</h5>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card feature-card text-center shadow-sm">
+          <h5 class="mb-1">Kiranmayee Sai Thammineni</h5>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card feature-card text-center shadow-sm">
+          <h5 class="mb-1">Jahnavi Ediga</h5>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card feature-card text-center shadow-sm">
+          <h5 class="mb-1">Snehalatha Mangapoti</h5>
+        </div>
+      </div>
+      <!-- Guide Card -->
+      <div class="col">
+        <div class="card border-primary shadow-sm p-3 text-center">
+          <h6 class="text-primary mb-1">👩‍🏫 Guided by</h6>
+          <h5 class="mb-1">Dr. B Harichandana</h5>
+          <p class="text-muted mb-0">Associate Professor, Department of CSE, SRIT</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-5">
+    <p>&copy; 2025 Ransomware Detection System. Built by our team. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function clearFileName() {
+      localStorage.removeItem("uploadedFileName");
+    }
+  </script>
+</body>
+</html>

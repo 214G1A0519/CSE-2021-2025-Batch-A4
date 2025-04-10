@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ransomware Detection System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 70px; /* Prevent content under fixed navbar */
+    }
+    .navbar {
+      background-color: #1f1f1f !important;
+    }
+    .hero-section {
+      background-color: #2c3e50;
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .hero-section h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .hero-section p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+    .section-title {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-weight: 600;
+    }
+    .feature-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    .icon-circle {
+      font-size: 2rem;
+      color: #3498db;
+      background: #e6f2fb;
+      padding: 15px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .cta {
+      background-color: #3498db;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .cta h3 {
+      font-weight: bold;
+    }
+    footer {
+      background-color: #1f1f1f;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+    }
+    footer a {
+      color: #3498db;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Ransomware Detection</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About Us</a></li>
+          {% if 'username' in session %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('detect') }}">Detection Interface</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('detectload') }}">Detection</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}" onclick="clearFileName()">Logout</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}" onclick="clearFileName()">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1>Welcome to the Ransomware Detection System</h1>
+    <p>Protect your systems from cyber threats using intelligent machine learning algorithms.</p>
+  </div>
+
+  <!-- About Section -->
+  <div id="about" class="container mt-5">
+    <h2 class="section-title">Introduction</h2>
+    <p class="text-center text-muted">This platform is designed to detect and categorize ransomware threats like LockBit, BlackCat, Rhysida, Play Ransomware, Akira. Using real-time data and machine learning, we ensure accurate and fast classification to minimize damage and improve system resilience.</p>
+  </div>
+
+  <!-- How It Works -->
+  <div class="container mt-5">
+    <h2 class="section-title">How It Works</h2>
+    <div class="row text-center g-4">
+      <div class="col-md-4">
+        <div class="icon-circle mb-3">📁</div>
+        <h5>Upload Data</h5>
+        <p>Submit traffic or feature files for analysis. The system reads key characteristics of ransomware behavior.</p>
+      </div>
+      <div class="col-md-4">
+        <div class="icon-circle mb-3">🧠</div>
+        <h5>ML Classification</h5>
+        <p>Our models analyze features such as domain entropy, exfiltration attempts, and protocol usage.</p>
+      </div>
+      <div class="col-md-4">
+        <div class="icon-circle mb-3">🛡️</div>
+        <h5>Detect & Protect</h5>
+        <p>The system categorizes the file (e.g., Akira, Play, BlackCat) and alerts for quick response.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Choose Us -->
+  <div class="container mt-5">
+    <h2 class="section-title">Why Choose Us?</h2>
+    <div class="row text-center g-4">
+      <div class="col-md-4">
+        <div class="card h-100 p-3 shadow feature-card">
+          <h5>Accurate Detection</h5>
+          <p>We use ensemble models and domain-specific features to enhance ransomware identification accuracy.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 p-3 shadow feature-card">
+          <h5>Modern Interface</h5>
+          <p>Clean and user-friendly design ensures easy navigation and better UX for all users.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 p-3 shadow feature-card">
+          <h5>Privacy Focused</h5>
+          <p>No user data is stored. All detection happens in real time without long-term retention.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="cta mt-5">
+    <h3>Start Protecting Your Systems Now!</h3>
+    <p>Sign up or log in to begin classifying threats and securing your network.</p>
+    <a href="{{ url_for('signup') }}" class="btn btn-light mt-3 px-4 py-2">Get Started</a>
+  </div>
+
+  <!-- Flash Messages -->
+  <div class="container mt-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- Features Section -->
+  <div class="container mt-5">
+    <h2 class="section-title">Core Features</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card feature-card p-3 h-100 shadow">
+          <div class="card-body">
+            <h5 class="card-title text-center">Multiple Models</h5>
+            <p class="card-text">Choose between Random Forest, Logistic Regression, and SVM models for precision.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card feature-card p-3 h-100 shadow">
+          <div class="card-body">
+            <h5 class="card-title text-center">Comprehensive Analysis</h5>
+            <p class="card-text">Covers domain entropy, protocol behavior, DNS queries, and much more.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card feature-card p-3 h-100 shadow">
+          <div class="card-body">
+            <h5 class="card-title text-center">Real-Time Detection</h5>
+            <p class="card-text">Instant predictions and feedback on uploaded data for fast remediation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-5">
+    <p>&copy; 2025 Ransomware Detection System. Built by our team. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function clearFileName() {
+      localStorage.removeItem("uploadedFileName");
+    }
+  </script>
+</body>
+</html>
